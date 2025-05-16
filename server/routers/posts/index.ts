@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../../trpc";
 
-export const appRouter = router({
+export const postsRouter = router({
   hello: publicProcedure.query(({ ctx }) => {
     const { userId } = ctx.auth;
 
@@ -16,5 +16,3 @@ export const appRouter = router({
     };
   }),
 });
-
-export type AppRouter = typeof appRouter;

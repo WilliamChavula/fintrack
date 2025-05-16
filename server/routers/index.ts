@@ -1,19 +1,8 @@
-import { router, publicProcedure } from "../trpc";
+import { mergeRouters } from "@/server/trpc";
+import { accountsRouter } from "./accounts";
+import { postsRouter } from "./posts";
 
-export const exampleRouter = router({
-  hello: publicProcedure.query(({ ctx }) => {
-    const { userId } = ctx.auth;
+export const appRouter = mergeRouters(postsRouter, accountsRouter);
 
-    if (!userId) {
-      return {
-        greeting: "Hello! You are not signed in.",
-      };
-    }
-
-    return {
-      greeting: `Hello ${userId}!`,
-    };
-  }),
-});
-
-export type exampleRouter = typeof exampleRouter;
+// export type definition of API
+export type AppRouter = typeof appRouter;
