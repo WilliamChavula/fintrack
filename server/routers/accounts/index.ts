@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { accounts } from "@/server/db/schema";
+import { accounts } from "@/server/db/models";
 import { protectedProcedure, router } from "@/server/trpc";
 
 export const accountsRouter = router({
