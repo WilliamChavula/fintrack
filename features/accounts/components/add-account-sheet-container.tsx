@@ -11,8 +11,10 @@ import {
   SheetDescription,
   SheetHeader,
 } from "@/components/ui/sheet";
+import { AddAccountForm } from "./add-account-form";
+import { AddAccountFormValues } from "../validators/add-account-form";
 
-export function AddAccount() {
+export function AddAccountSheerContainer() {
   const { isOpen, close } = useCreateAccountStore();
 
   const isMounted = useMountedState();
@@ -20,6 +22,10 @@ export function AddAccount() {
   if (!isMounted) {
     return null;
   }
+
+  const handleSubmit = (data: AddAccountFormValues) => {
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={close}>
@@ -30,6 +36,9 @@ export function AddAccount() {
             Add a new account to track your transactions.
           </SheetDescription>
         </SheetHeader>
+        <div className="px-5">
+          <AddAccountForm onSubmit={handleSubmit} />
+        </div>
       </SheetContent>
     </Sheet>
   );
