@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import TanStackProviders from "@/providers/tanstack-provider";
+import { AddAccount } from "@/features/accounts/components/add-account";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <TanStackProviders>{children}</TanStackProviders>
+          <TanStackProviders>
+            <AddAccount />
+            {children}
+          </TanStackProviders>
         </body>
       </html>
     </ClerkProvider>
