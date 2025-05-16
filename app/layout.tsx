@@ -1,10 +1,14 @@
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
+import TanStackProviders from "@/providers/tanstack-provider";
+
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+
+import { AddAccountSheerContainer } from "@/features/accounts/components/add-account-sheet-container";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ReactNode } from "react";
-import { ClerkProvider } from "@clerk/nextjs";
-import TanStackProviders from "@/providers/tanstack-provider";
-import { AddAccountSheerContainer } from "@/features/accounts/components/add-account-sheet-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +38,7 @@ export default function RootLayout({
         >
           <TanStackProviders>
             <AddAccountSheerContainer />
+            <Toaster />
             {children}
           </TanStackProviders>
         </body>

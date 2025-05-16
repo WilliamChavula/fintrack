@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/sheet";
 import { AddAccountForm } from "./add-account-form";
 import { AddAccountFormValues } from "../validators/add-account-form";
+import { useCreateNewAccount } from "../api/use-create-new-account";
 
 export function AddAccountSheerContainer() {
   const { isOpen, close } = useCreateAccountStore();
+  const { createAccount, isLoading } = useCreateNewAccount();
 
   const isMounted = useMountedState();
 
@@ -24,7 +26,11 @@ export function AddAccountSheerContainer() {
   }
 
   const handleSubmit = (data: AddAccountFormValues) => {
-    console.log("Form submitted with data:", data);
+    createAccount(data, {
+      onSuccess: () => {
+        close();
+      },
+    });
   };
 
   return (
@@ -37,7 +43,7 @@ export function AddAccountSheerContainer() {
           </SheetDescription>
         </SheetHeader>
         <div className="px-5">
-          <AddAccountForm onSubmit={handleSubmit} />
+          <AddAccountForm onSubmit={handleSubmit} disabled={isLoading} />
         </div>
       </SheetContent>
     </Sheet>
