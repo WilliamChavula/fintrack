@@ -33,6 +33,7 @@ export function AddAccountForm({
   onSubmit,
   onDelete,
 }: AddAccountFormProps) {
+  console.log({ defaultValues });
   const form = useForm<AddAccountFormValues>({
     resolver: zodResolver(addAccountFormSchema),
     defaultValues: {

@@ -9,6 +9,7 @@ import { AddAccountSheerContainer } from "@/features/accounts/components/add-acc
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { EditAccountSheetContainer } from "@/features/accounts/components/edit-account-sheet-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
         >
           <TanStackProviders>
             <AddAccountSheerContainer />
+            <EditAccountSheetContainer />
             <Toaster />
             {children}
           </TanStackProviders>

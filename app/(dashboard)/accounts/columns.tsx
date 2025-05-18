@@ -8,6 +8,7 @@ import type { AppRouter } from "@/server/routers";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
+import DropDownMenuActions from "@/features/accounts/components/dropdown-menu-actions";
 
 export type GetAccountResponse = inferProcedureOutput<
   AppRouter["getAccounts"]
@@ -48,6 +49,12 @@ export const columns: ColumnDef<GetAccountResponse>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return <DropDownMenuActions id={row.original.id} />;
     },
   },
 ];
