@@ -10,3 +10,7 @@ export const insertAccountSchema = createInsertSchema(accounts).pick({
 export const bulkDeleteAccountSchema = z.object({
   ids: z.array(z.string()),
 });
+
+export const pathParamsSchema = z.object({
+  id: z.string({ message: "Account Id is required" }),
+});
