@@ -1,28 +1,38 @@
 "use client";
 
+import { Loader, PlusSquare } from "lucide-react";
+
+import { useCreateAccountStore } from "@/features/accounts/hooks/use-create-account-store";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { columns } from "./columns";
+
+import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCreateAccountStore } from "@/features/accounts/hooks/use-create-account-store";
-import { PlusSquare } from "lucide-react";
-import { columns, Payment } from "./columns";
-import { DataTable } from "@/components/data-table";
-
-function getData(): Payment[] {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    // ...
-  ];
-}
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Accounts() {
-  const data = getData();
   const { open } = useCreateAccountStore();
+  const { data, isLoading } = useGetAccounts();
+
+  if (isLoading) {
+    return (
+      <main>
+        <section className="mx-auto -mt-16 w-full max-w-screen-2xl pb-6">
+          <Card className="border-none drop-shadow-sm">
+            <CardHeader>
+              <Skeleton className="h-6 w-1/2" />
+            </CardHeader>
+            <CardContent>
+              <div className="flex h-[300px] w-full items-center justify-center">
+                <Loader className="text-muted-foreground size-5 animate-spin" />
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      </main>
+    );
+  }
   return (
     <main>
       <section className="mx-auto -mt-16 w-full max-w-screen-2xl pb-6">
@@ -37,7 +47,7 @@ function Accounts() {
             </Button>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={data?.accounts || []} />
           </CardContent>
         </Card>
       </section>

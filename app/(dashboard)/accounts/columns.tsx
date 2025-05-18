@@ -1,19 +1,19 @@
 "use client";
+import { inferProcedureOutput } from "@trpc/server";
 
 import { ArrowUpDown } from "lucide-react";
+
+import type { AppRouter } from "@/server/routers";
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
+export type GetAccountResponse = inferProcedureOutput<
+  AppRouter["getAccounts"]
+>["accounts"][number];
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<GetAccountResponse>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -37,34 +37,17 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    accessorKey: "email",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
 ];
