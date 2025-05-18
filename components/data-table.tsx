@@ -25,6 +25,7 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Trash } from "lucide-react";
+import useCOnfirmDialog from "@/hooks/use-confirm-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,6 +45,10 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+  const [ConfirmationDialog, onConfirmation] = useCOnfirmDialog({
+    title: "Delete Confirmation",
+    message: "Are you sure you want to perform this action?",
+  });
 
   const table = useReactTable({
     data,
@@ -64,6 +69,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
+      <ConfirmationDialog />
       <div className="flex items-center py-4">
         <Input
           placeholder={`Filter by ${filterKey || ""}...`}
@@ -79,7 +85,10 @@ export function DataTable<TData, TValue>({
             variant="outline"
             disabled={disabled}
             className="ml-auto text-xs font-normal"
-            onClick={() => {
+            onClick={async () => {
+              const confirmed = await onConfirmation();
+              if (!confirmed) return; // If the user cancels, do nothing
+
               if (onDelete) {
                 onDelete(table.getFilteredSelectedRowModel().rows);
                 table.resetRowSelection();

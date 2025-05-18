@@ -11,7 +11,7 @@ export const useBulkDeleteAccounts = () => {
         // Refetch the accounts after deletion
         getAccountsQuery.refetch();
 
-        // Todo: Invalidate summary
+        // TODO: Invalidate summary
       },
       onError: () => {
         toast.error("Failed to delete accounts");
