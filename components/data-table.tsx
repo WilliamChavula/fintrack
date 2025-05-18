@@ -82,6 +82,7 @@ export function DataTable<TData, TValue>({
             onClick={() => {
               if (onDelete) {
                 onDelete(table.getFilteredSelectedRowModel().rows);
+                table.resetRowSelection();
               }
             }}
           >

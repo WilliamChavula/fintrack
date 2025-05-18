@@ -1,8 +1,8 @@
-import { eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 import { accounts } from "@/server/db/models";
 import { protectedProcedure, router } from "@/server/trpc";
-import { insertAccountSchema } from "@/server/schema";
+import { bulkDeleteAccountSchema, insertAccountSchema } from "@/server/schema";
 
 export const accountsRouter = router({
   getAccounts: protectedProcedure.query(async ({ ctx }) => {
@@ -31,5 +31,19 @@ export const accountsRouter = router({
         .returning();
 
       return { account: record };
+    }),
+
+  bulkDeleteAccount: protectedProcedure
+    .input(bulkDeleteAccountSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db, auth } = ctx;
+      const { ids } = input;
+
+      const records = await db
+        .delete(accounts)
+        .where(and(eq(accounts.userId, auth.userId), inArray(accounts.id, ids)))
+        .returning({ id: accounts.id });
+
+      return { accounts: records };
     }),
 });

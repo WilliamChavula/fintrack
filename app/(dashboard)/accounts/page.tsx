@@ -4,16 +4,26 @@ import { Loader, PlusSquare } from "lucide-react";
 
 import { useCreateAccountStore } from "@/features/accounts/hooks/use-create-account-store";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { columns } from "./columns";
+import { columns, GetAccountResponse } from "./columns";
 
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
+import { Row } from "@tanstack/react-table";
 
 function Accounts() {
   const { open } = useCreateAccountStore();
   const { data, isLoading } = useGetAccounts();
+  const { deleteAccounts, isPending } = useBulkDeleteAccounts();
+
+  const isDisabled = isPending || isLoading;
+
+  const handleDelete = (rows: Row<GetAccountResponse>[]) => {
+    const selectedRows = rows.map((row) => row.original.id);
+    deleteAccounts({ ids: selectedRows });
+  };
 
   if (isLoading) {
     return (
@@ -47,7 +57,12 @@ function Accounts() {
             </Button>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={data?.accounts || []} />
+            <DataTable
+              columns={columns}
+              data={data?.accounts || []}
+              disabled={isDisabled}
+              onDelete={handleDelete}
+            />
           </CardContent>
         </Card>
       </section>
