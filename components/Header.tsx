@@ -9,7 +9,7 @@ import Welcome from "@/components/Welcome";
 const Header = () => {
   return (
     <header className="bg-gradient-to-b from-slate-900 to-slate-950 px-4 py-6 lg:px-8">
-      <section className="mx-auto max-w-2xl">
+      <section className="mx-auto max-w-2xl pb-16">
         <div className="mb-12 flex w-full items-center justify-between">
           <div className="flex items-center gap-5">
             <Link href="/">
