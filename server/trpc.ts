@@ -9,6 +9,7 @@ const t = initTRPC.context<Context>().create({
     const { error } = opts;
     switch (error.code) {
       case "INTERNAL_SERVER_ERROR":
+        console.error("Internal server error:", JSON.stringify(error));
         return {
           message: "Something went wrong",
         };
@@ -16,6 +17,11 @@ const t = initTRPC.context<Context>().create({
         return {
           message: "You must be logged in to perform this action",
         };
+      case "NOT_FOUND": {
+        return {
+          message: "Resource not found",
+        };
+      }
       case "BAD_REQUEST":
         if (error.cause instanceof ZodError) {
           return {

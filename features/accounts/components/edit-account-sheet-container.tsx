@@ -14,10 +14,12 @@ import { AddAccountFormValues } from "../validators/add-account-form";
 import { useGetAccount } from "../api/use-get-account";
 import { useUpdateAccountStore } from "../hooks/use-update-account";
 import { Loader } from "lucide-react";
+import { useUpdateAccount } from "../api/use-update-account";
 
 export function EditAccountSheetContainer() {
   const { isOpen, close, id } = useUpdateAccountStore();
   const { data, isLoading } = useGetAccount(id);
+  const { updateAccount, isLoading: isUpdating } = useUpdateAccount();
 
   const isMounted = useMountedState();
 
@@ -25,7 +27,13 @@ export function EditAccountSheetContainer() {
     return null;
   }
 
-  const handleSubmit = (data: AddAccountFormValues) => {};
+  const handleSubmit = (data: AddAccountFormValues) => {
+    updateAccount({
+      id,
+      name: data.name,
+    });
+    close();
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={close}>
@@ -43,7 +51,7 @@ export function EditAccountSheetContainer() {
             <AddAccountForm
               id={id}
               onSubmit={handleSubmit}
-              disabled={isLoading}
+              disabled={isLoading || isUpdating}
               defaultValues={data?.account}
             />
           )}

@@ -6,6 +6,7 @@ import {
   bulkDeleteAccountSchema,
   insertAccountSchema,
   pathParamsSchema,
+  updateAccountSchema,
 } from "@/server/schema";
 import { TRPCError } from "@trpc/server";
 
@@ -60,6 +61,30 @@ export const accountsRouter = router({
         })
         .returning();
 
+      return { account: record };
+    }),
+
+  updateAccount: protectedProcedure
+    .input(pathParamsSchema)
+    .input(updateAccountSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db, auth } = ctx;
+      const { id, name } = input;
+      const [record] = await db
+        .update(accounts)
+        .set({ name })
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
+        .returning({
+          id: accounts.id,
+          name: accounts.name,
+        });
+
+      if (!record) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: `Account with id ${id} not found`,
+        });
+      }
       return { account: record };
     }),
 
