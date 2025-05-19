@@ -1,9 +1,13 @@
 import { z } from "zod";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 
-import { accounts } from "../db/models";
+import { accounts, categories } from "../db/models";
 
 export const insertAccountSchema = createInsertSchema(accounts).pick({
+  name: true,
+});
+
+export const insertCategoriesSchema = createInsertSchema(categories).pick({
   name: true,
 });
 

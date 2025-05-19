@@ -9,3 +9,12 @@ export const accounts = pgTable("accounts", {
   plaidId: text("plaid_id"),
   name: text().notNull(),
 });
+
+export const categories = pgTable("categories", {
+  id: uuid()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: text("user_id").notNull(),
+  plaidId: text("plaid_id"),
+  name: text().notNull(),
+});
