@@ -1,12 +1,14 @@
 import { create } from "zustand";
-import { CreateAccountState, UpdateAccountState } from "./types";
-import { createAccountStore } from "../accounts/hooks/use-create-account-store";
-import { updateAccountStore } from "../accounts/hooks/use-update-account";
 
-export const useStore = create<CreateAccountState & UpdateAccountState>()(
+import { createResourceSlice } from "../accounts/hooks/create-resource-slice";
+import { updateResourceSlice } from "../accounts/hooks/update-resource-slice";
+
+import { CreateResourceState, UpdateResourceState } from "./types";
+
+export const useStore = create<CreateResourceState & UpdateResourceState>()(
   (...a) => ({
-    ...createAccountStore(...a),
-    ...updateAccountStore(...a),
+    ...createResourceSlice(...a),
+    ...updateResourceSlice(...a),
   }),
 );
 export type Store = ReturnType<typeof useStore>;

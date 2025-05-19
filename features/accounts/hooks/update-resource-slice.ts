@@ -1,11 +1,14 @@
-import { CreateAccountState, UpdateAccountState } from "@/features/store/types";
+import {
+  CreateResourceState,
+  UpdateResourceState,
+} from "@/features/store/types";
 import { StateCreator } from "zustand";
 
-export const updateAccountStore: StateCreator<
-  CreateAccountState & UpdateAccountState,
+export const updateResourceSlice: StateCreator<
+  CreateResourceState & UpdateResourceState,
   [],
   [],
-  UpdateAccountState
+  UpdateResourceState
 > = (set) => ({
   id: "",
   isOpen: false,
