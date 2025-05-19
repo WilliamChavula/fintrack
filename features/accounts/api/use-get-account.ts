@@ -1,5 +1,5 @@
 import { trpc } from "@/providers/tanstack-provider";
-import { isValidUuid } from "../validators/get-account-validator";
+import { isValidUuid } from "../../validators/get-resource-validator";
 
 export const useGetAccount = (id: string) => {
   const { data, isLoading, status, error } = trpc.getAccount.useQuery(
