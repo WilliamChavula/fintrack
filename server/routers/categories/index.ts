@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { protectedProcedure, router } from "@/server/trpc";
 import { categories } from "@/server/db/models";
 import {
-  bulkDeleteAccountSchema,
+  bulkDeleteResourceSchema,
   insertCategoriesSchema,
   pathParamsSchema,
 } from "@/server/schema";
@@ -118,8 +118,8 @@ export const categoriesRouter = router({
       return { category: record };
     }),
 
-  bulkDeleteAccount: protectedProcedure
-    .input(bulkDeleteAccountSchema)
+  bulkDeleteCategories: protectedProcedure
+    .input(bulkDeleteResourceSchema)
     .mutation(async ({ ctx, input }) => {
       const { db, auth } = ctx;
       const { ids } = input;

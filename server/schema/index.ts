@@ -15,7 +15,7 @@ export const updateAccountSchema = createUpdateSchema(accounts).pick({
   name: true,
 });
 
-export const bulkDeleteAccountSchema = z.object({
+export const bulkDeleteResourceSchema = z.object({
   ids: z.array(z.string()),
 });
 

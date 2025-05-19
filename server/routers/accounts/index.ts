@@ -3,7 +3,7 @@ import { and, eq, inArray } from "drizzle-orm";
 import { accounts } from "@/server/db/models";
 import { protectedProcedure, router } from "@/server/trpc";
 import {
-  bulkDeleteAccountSchema,
+  bulkDeleteResourceSchema,
   insertAccountSchema,
   pathParamsSchema,
   updateAccountSchema,
@@ -109,7 +109,7 @@ export const accountsRouter = router({
     }),
 
   bulkDeleteAccount: protectedProcedure
-    .input(bulkDeleteAccountSchema)
+    .input(bulkDeleteResourceSchema)
     .mutation(async ({ ctx, input }) => {
       const { db, auth } = ctx;
       const { ids } = input;
