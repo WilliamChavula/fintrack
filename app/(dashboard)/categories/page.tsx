@@ -1,28 +1,28 @@
 "use client";
 
+import { Row } from "@tanstack/react-table";
 import { Loader, PlusSquare } from "lucide-react";
 
+import { columns, GetCategoryResponse } from "./columns";
 import { useStore } from "@/features/store";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { columns, GetAccountResponse } from "./columns";
+import { useBulkDeleteCategories } from "@/features/categories/api/use-bulk-delete-categories";
+import { useGetCategories } from "@/features/categories/api/use-get-categories";
 
-import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DataTable } from "@/components/data-table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete-accounts";
-import { Row } from "@tanstack/react-table";
 
 function Categories() {
   const open = useStore((state) => state.openCreatePanel);
-  const { data, isLoading } = useGetAccounts();
-  const { deleteAccounts, isPending } = useBulkDeleteAccounts();
+  const { data, isLoading } = useGetCategories();
+  const { deleteCategories, isPending } = useBulkDeleteCategories();
 
   const isDisabled = isPending || isLoading;
 
-  const handleDelete = (rows: Row<GetAccountResponse>[]) => {
+  const handleDelete = (rows: Row<GetCategoryResponse>[]) => {
     const selectedRows = rows.map((row) => row.original.id);
-    deleteAccounts({ ids: selectedRows });
+    deleteCategories({ ids: selectedRows });
   };
 
   if (isLoading) {
@@ -58,8 +58,9 @@ function Categories() {
           </CardHeader>
           <CardContent>
             <DataTable
+              filterKey="name"
               columns={columns}
-              data={data?.accounts || []}
+              data={data?.categories || []}
               disabled={isDisabled}
               onDelete={handleDelete}
             />

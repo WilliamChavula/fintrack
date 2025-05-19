@@ -1,0 +1,9 @@
+import { z } from "zod";
+
+export const addCategoryFormSchema = z.object({
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
+});
+
+export type AddACategoryFormValues = z.infer<typeof addCategoryFormSchema>;

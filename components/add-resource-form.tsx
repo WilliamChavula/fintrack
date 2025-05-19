@@ -43,8 +43,6 @@ export function AddResourceForm({
     },
   });
   const onFormSubmit = (data: { name: string }) => {
-    console.log({ data });
-
     onSubmit(data);
     form.reset();
   };

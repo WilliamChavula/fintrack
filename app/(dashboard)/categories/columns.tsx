@@ -8,13 +8,14 @@ import type { AppRouter } from "@/server/routers";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import DropDownMenuActions from "@/features/accounts/components/dropdown-menu-actions";
 
-export type GetAccountResponse = inferProcedureOutput<
-  AppRouter["getAccounts"]
->["accounts"][number];
+import DropDownMenuActions from "@/features/categories/components/dropdown-menu-actions";
 
-export const columns: ColumnDef<GetAccountResponse>[] = [
+export type GetCategoryResponse = inferProcedureOutput<
+  AppRouter["getCategories"]
+>["categories"][number];
+
+export const columns: ColumnDef<GetCategoryResponse>[] = [
   {
     id: "select",
     header: ({ table }) => (
