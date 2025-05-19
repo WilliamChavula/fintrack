@@ -88,6 +88,26 @@ export const accountsRouter = router({
       return { account: record };
     }),
 
+  deleteAccount: protectedProcedure
+    .input(pathParamsSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db, auth } = ctx;
+
+      const [record] = await db
+        .delete(accounts)
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, input.id)))
+        .returning({ id: accounts.id });
+
+      if (!record) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: `Account with id ${input.id} not found`,
+        });
+      }
+
+      return { account: record };
+    }),
+
   bulkDeleteAccount: protectedProcedure
     .input(bulkDeleteAccountSchema)
     .mutation(async ({ ctx, input }) => {

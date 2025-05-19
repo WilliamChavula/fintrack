@@ -25,7 +25,7 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Trash } from "lucide-react";
-import useCOnfirmDialog from "@/hooks/use-confirm-dialog";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const [ConfirmationDialog, onConfirmation] = useCOnfirmDialog({
+  const [ConfirmationDialog, onConfirmation] = useConfirmDialog({
     title: "Delete Confirmation",
     message: "Are you sure you want to perform this action?",
   });

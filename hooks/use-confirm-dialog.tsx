@@ -16,7 +16,7 @@ interface ConfirmDialogProps {
 
 type ConfirmDialogReturn = [() => JSX.Element, () => Promise<unknown>];
 
-const useCOnfirmDialog = ({
+export const useConfirmDialog = ({
   title,
   message,
 }: ConfirmDialogProps): ConfirmDialogReturn => {
@@ -64,5 +64,3 @@ const useCOnfirmDialog = ({
 
   return [ConfirmationDialog, confirm];
 };
-
-export default useCOnfirmDialog;

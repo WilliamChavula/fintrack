@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit, MoreHorizontal } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUpdateAccountStore } from "../hooks/use-update-account";
+import { useDeleteAccount } from "../api/use-delete-account";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 
 type DropDownMenuActionsProps = {
   id: string;
@@ -17,9 +19,23 @@ type DropDownMenuActionsProps = {
 
 const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
   const { open } = useUpdateAccountStore();
+  const { deleteAccount, isPending: isDeleting } = useDeleteAccount();
+  const [ConfirmationDialog, onConfirmation] = useConfirmDialog({
+    title: "Delete Account?",
+    message:
+      "Are you sure you want to delete this account? This action cannot be undone.",
+  });
+
+  const handleDelete = async () => {
+    const confirmed = await onConfirmation();
+    if (confirmed) {
+      deleteAccount({ id }, { onSuccess: () => close() });
+    }
+  };
 
   return (
     <>
+      <ConfirmationDialog />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="size-8 p-0" size="icon">
@@ -29,6 +45,7 @@ const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem
+            disabled={isDeleting}
             className="cursor-pointer"
             onClick={() => {
               return open(id);
@@ -36,6 +53,14 @@ const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
           >
             <Edit className="mr-2 size-4" />
             Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            disabled={isDeleting}
+            className="cursor-pointer"
+            onClick={handleDelete}
+          >
+            <Trash className="mr-2 size-4" />
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
