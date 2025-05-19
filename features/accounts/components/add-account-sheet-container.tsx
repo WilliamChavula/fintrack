@@ -2,7 +2,7 @@
 
 import { useMountedState } from "react-use";
 
-import { useCreateAccountStore } from "../hooks/use-create-account-store";
+import { useStore } from "../../store";
 
 import {
   Sheet,
@@ -16,7 +16,8 @@ import { AddAccountFormValues } from "../validators/add-account-form";
 import { useCreateNewAccount } from "../api/use-create-new-account";
 
 export function AddAccountSheerContainer() {
-  const { isOpen, close } = useCreateAccountStore();
+  const isOpen = useStore((state) => state.isOpen);
+  const close = useStore((state) => state.closeCreatePanel);
   const { createAccount, isLoading } = useCreateNewAccount();
 
   const isMounted = useMountedState();

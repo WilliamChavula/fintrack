@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUpdateAccountStore } from "../hooks/use-update-account";
+import { useStore } from "../../store";
 import { useDeleteAccount } from "../api/use-delete-account";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 
@@ -18,7 +18,7 @@ type DropDownMenuActionsProps = {
 };
 
 const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
-  const { open } = useUpdateAccountStore();
+  const open = useStore((state) => state.openEditPanel);
   const { deleteAccount, isPending: isDeleting } = useDeleteAccount();
   const [ConfirmationDialog, onConfirmation] = useConfirmDialog({
     title: "Delete Account?",
