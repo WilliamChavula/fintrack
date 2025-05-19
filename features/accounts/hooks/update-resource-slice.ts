@@ -1,8 +1,9 @@
+import { StateCreator } from "zustand";
+
 import {
   CreateResourceState,
   UpdateResourceState,
 } from "@/features/store/types";
-import { StateCreator } from "zustand";
 
 export const updateResourceSlice: StateCreator<
   CreateResourceState & UpdateResourceState,
