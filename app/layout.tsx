@@ -5,11 +5,10 @@ import TanStackProviders from "@/providers/tanstack-provider";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-import { AddAccountSheerContainer } from "@/features/accounts/components/add-account-sheet-container";
+import { AccountSheetProvider } from "@/features/accounts/components/account-provider";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { EditAccountSheetContainer } from "@/features/accounts/components/edit-account-sheet-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +37,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <TanStackProviders>
-            <AddAccountSheerContainer />
-            <EditAccountSheetContainer />
+            <AccountSheetProvider />
             <Toaster />
             {children}
           </TanStackProviders>

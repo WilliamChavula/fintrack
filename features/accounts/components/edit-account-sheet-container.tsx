@@ -9,7 +9,7 @@ import { useDeleteAccount } from "../api/use-delete-account";
 import { AddAccountFormValues } from "../validators/add-account-form";
 
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
-import { useUpdateAccountStore } from "../hooks/use-update-account";
+import { useStore } from "../../store";
 
 import {
   Sheet,
@@ -23,7 +23,9 @@ import { AddAccountForm } from "./add-account-form";
 export function EditAccountSheetContainer() {
   const isMounted = useMountedState();
 
-  const { isOpen, close, id } = useUpdateAccountStore();
+  const isOpen = useStore((state) => state.isOpen);
+  const close = useStore((state) => state.closeEditPanel);
+  const id = useStore((state) => state.id);
   const { data, isLoading } = useGetAccount(id);
   const { updateAccount, isLoading: isUpdating } = useUpdateAccount();
   const { deleteAccount, isPending: isDeleting } = useDeleteAccount();

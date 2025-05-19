@@ -41,6 +41,8 @@ export function AddAccountForm({
     },
   });
   const onFormSubmit = (data: AddAccountFormValues) => {
+    console.log({ data });
+
     onSubmit(data);
     form.reset();
   };

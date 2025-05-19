@@ -2,7 +2,7 @@
 
 import { Loader, PlusSquare } from "lucide-react";
 
-import { useCreateAccountStore } from "@/features/accounts/hooks/use-create-account-store";
+import { useStore } from "@/features/store";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { columns, GetAccountResponse } from "./columns";
 
@@ -14,7 +14,7 @@ import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
 import { Row } from "@tanstack/react-table";
 
 function Accounts() {
-  const { open } = useCreateAccountStore();
+  const open = useStore((state) => state.openCreatePanel);
   const { data, isLoading } = useGetAccounts();
   const { deleteAccounts, isPending } = useBulkDeleteAccounts();
 

@@ -1,13 +1,14 @@
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 
-export interface CreateAccountState {
-  isOpen: boolean;
-  open: () => void;
-  close: () => void;
-}
+import { CreateAccountState, UpdateAccountState } from "@/features/store/types";
 
-export const useCreateAccountStore = create<CreateAccountState>((set) => ({
+export const createAccountStore: StateCreator<
+  CreateAccountState & UpdateAccountState,
+  [],
+  [],
+  CreateAccountState
+> = (set) => ({
   isOpen: false,
-  open: () => set({ isOpen: true }),
-  close: () => set({ isOpen: false }),
-}));
+  openCreatePanel: () => set({ isOpen: true }),
+  closeCreatePanel: () => set({ isOpen: false }),
+});

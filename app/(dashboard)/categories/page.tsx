@@ -2,7 +2,7 @@
 
 import { Loader, PlusSquare } from "lucide-react";
 
-import { useCreateAccountStore } from "@/features/accounts/hooks/use-create-account-store";
+import { useStore } from "@/features/store";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { columns, GetAccountResponse } from "./columns";
 
@@ -13,8 +13,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
 import { Row } from "@tanstack/react-table";
 
-function Accounts() {
-  const { open } = useCreateAccountStore();
+function Categories() {
+  const open = useStore((state) => state.openCreatePanel);
   const { data, isLoading } = useGetAccounts();
   const { deleteAccounts, isPending } = useBulkDeleteAccounts();
 
@@ -49,11 +49,11 @@ function Accounts() {
         <Card className="border-none drop-shadow-sm">
           <CardHeader className="gap-y-2 lg:flex-row lg:justify-between lg:text-center">
             <CardTitle className="line-clamp-1 text-xl">
-              Manage your Accounts
+              Manage your Categories
             </CardTitle>
             <Button size="sm" onClick={open}>
               <PlusSquare className="mr-2 size-4" />
-              Add Account
+              Add New
             </Button>
           </CardHeader>
           <CardContent>
@@ -70,4 +70,4 @@ function Accounts() {
   );
 }
 
-export default Accounts;
+export default Categories;
