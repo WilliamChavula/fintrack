@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   addAccountFormSchema,
   AddAccountFormValues,
-} from "../validators/add-account-form";
+} from "../../validators/add-account-form";
 
 import {
   Form,

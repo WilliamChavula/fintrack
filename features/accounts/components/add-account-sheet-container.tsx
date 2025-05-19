@@ -12,7 +12,7 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 import { AddAccountForm } from "./add-account-form";
-import { AddAccountFormValues } from "../validators/add-account-form";
+import { AddAccountFormValues } from "../../validators/add-account-form";
 import { useCreateNewAccount } from "../api/use-create-new-account";
 
 export function AddAccountSheerContainer() {

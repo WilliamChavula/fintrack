@@ -6,7 +6,7 @@ import { Loader } from "lucide-react";
 import { useGetAccount } from "../api/use-get-account";
 import { useUpdateAccount } from "../api/use-update-account";
 import { useDeleteAccount } from "../api/use-delete-account";
-import { AddAccountFormValues } from "../validators/add-account-form";
+import { AddAccountFormValues } from "../../validators/add-account-form";
 
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useStore } from "../../store";
