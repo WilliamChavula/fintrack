@@ -5,7 +5,7 @@ import TanStackProviders from "@/providers/tanstack-provider";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-import { AccountSheetProvider } from "@/features/accounts/components/account-provider";
+import { AccountSheetProvider } from "@/components/sheet-provider";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
