@@ -6,7 +6,10 @@ import { Loader } from "lucide-react";
 import { useGetAccount } from "../api/use-get-account";
 import { useUpdateAccount } from "../api/use-update-account";
 import { useDeleteAccount } from "../api/use-delete-account";
-import { AddAccountFormValues } from "../../validators/add-account-form";
+import {
+  AddAccountFormValues,
+  addAccountFormSchema,
+} from "../../validators/add-account-form";
 
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useStore } from "../../store";
@@ -18,7 +21,7 @@ import {
   SheetDescription,
   SheetHeader,
 } from "@/components/ui/sheet";
-import { AddAccountForm } from "./add-account-form";
+import { AddResourceForm } from "@/components/add-resource-form";
 
 export function EditAccountSheetContainer() {
   const isMounted = useMountedState();
@@ -69,7 +72,9 @@ export function EditAccountSheetContainer() {
                 <Loader className="text-muted-foreground size-4 animate-spin" />
               </div>
             ) : (
-              <AddAccountForm
+              <AddResourceForm
+                resourceType="Account"
+                schemaValidator={addAccountFormSchema}
                 id={id}
                 onSubmit={handleSubmit}
                 disabled={isDeleting || isUpdating}

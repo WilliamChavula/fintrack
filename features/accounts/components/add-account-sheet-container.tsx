@@ -11,9 +11,12 @@ import {
   SheetDescription,
   SheetHeader,
 } from "@/components/ui/sheet";
-import { AddAccountForm } from "./add-account-form";
-import { AddAccountFormValues } from "../../validators/add-account-form";
+import {
+  AddAccountFormValues,
+  addAccountFormSchema,
+} from "../../validators/add-account-form";
 import { useCreateNewAccount } from "../api/use-create-new-account";
+import { AddResourceForm } from "@/components/add-resource-form";
 
 export function AddAccountSheerContainer() {
   const isOpen = useStore((state) => state.isOpen);
@@ -44,7 +47,13 @@ export function AddAccountSheerContainer() {
           </SheetDescription>
         </SheetHeader>
         <div className="px-5">
-          <AddAccountForm onSubmit={handleSubmit} disabled={isLoading} />
+          <AddResourceForm
+            resourceType="Account"
+            onSubmit={handleSubmit}
+            disabled={isLoading}
+            schemaValidator={addAccountFormSchema}
+            placeholder="Checking, Savings, etc."
+          />
         </div>
       </SheetContent>
     </Sheet>
