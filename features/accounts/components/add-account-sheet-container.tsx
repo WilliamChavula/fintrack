@@ -18,7 +18,7 @@ import {
 import { useCreateNewAccount } from "../api/use-create-new-account";
 import { AddResourceForm } from "@/components/add-resource-form";
 
-export function AddAccountSheerContainer() {
+export function AddAccountSheetContainer() {
   const isOpen = useStore((state) => state.isOpen);
   const close = useStore((state) => state.closeCreatePanel);
   const { createAccount, isLoading } = useCreateNewAccount();

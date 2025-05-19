@@ -2,7 +2,7 @@
 
 import { useStore } from "@/features/store";
 import { EditAccountSheetContainer } from "@/features/accounts/components/edit-account-sheet-container";
-import { AddAccountSheerContainer } from "@/features/accounts/components/add-account-sheet-container";
+import { AddAccountSheetContainer } from "@/features/accounts/components/add-account-sheet-container";
 
 export const AccountSheetProvider = () => {
   const id = useStore((state) => state.id);
@@ -11,5 +11,5 @@ export const AccountSheetProvider = () => {
     return <EditAccountSheetContainer />;
   }
 
-  return <AddAccountSheerContainer />;
+  return <AddAccountSheetContainer />;
 };
