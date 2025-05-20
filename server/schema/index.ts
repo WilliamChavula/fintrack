@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 
-import { accounts, categories } from "../db/models";
+import { accounts, categories, transactions } from "../db/models";
 
 export const insertAccountSchema = createInsertSchema(accounts).pick({
   name: true,
@@ -21,4 +21,8 @@ export const bulkDeleteResourceSchema = z.object({
 
 export const pathParamsSchema = z.object({
   id: z.string({ message: "Account Id is required" }),
+});
+
+export const insertTransactionSchema = createInsertSchema(transactions, {
+  date: z.coerce.date(),
 });
