@@ -104,7 +104,7 @@ export const transactionsRouter = router({
           category: transactions.category,
         });
 
-      return { category: record };
+      return { transaction: record };
     }),
 
   updateTransaction: protectedProcedure
