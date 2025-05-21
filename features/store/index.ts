@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-import { createResourceSlice } from "../accounts/hooks/create-resource-slice";
-import { updateResourceSlice } from "../accounts/hooks/update-resource-slice";
+import { createResourceSlice } from "../hooks/create-resource-slice";
+import { updateResourceSlice } from "../hooks/update-resource-slice";
 
 import { CreateResourceState, UpdateResourceState } from "./types";
 
