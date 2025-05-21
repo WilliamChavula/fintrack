@@ -6,7 +6,6 @@ import {
   integer,
   timestamp,
   index,
-  check,
 } from "drizzle-orm/pg-core";
 
 export const accounts = pgTable(
@@ -53,7 +52,6 @@ export const transactions = pgTable(
     }),
   },
   (t) => [
-    check("positive_only_amount_check", sql`${t.amount} > 0`),
     index("transactions_account_index").on(t.account),
     index("transactions_category_index").on(t.category),
   ],
