@@ -7,6 +7,7 @@ import { EditAccountSheetContainer } from "@/features/accounts/components/edit-a
 import { AddAccountSheetContainer } from "@/features/accounts/components/add-account-sheet-container";
 import { EditCategorySheetContainer } from "@/features/categories/components/edit-category-sheet-container";
 import { AddCategorySheetContainer } from "@/features/categories/components/add-category-sheet-container";
+import { AddTransactionSheetContainer } from "@/features/transactions/components/add-transaction-sheet-container";
 
 export const AccountSheetProvider = () => {
   const path = usePathname();
@@ -22,5 +23,11 @@ export const AccountSheetProvider = () => {
     return <EditCategorySheetContainer />;
   } else if (!id && path === "/categories") {
     return <AddCategorySheetContainer />;
+  }
+
+  if (id && path === "/transactions") {
+    return <EditCategorySheetContainer />;
+  } else if (!id && path === "/transactions") {
+    return <AddTransactionSheetContainer />;
   }
 };

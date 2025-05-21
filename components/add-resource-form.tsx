@@ -57,10 +57,7 @@ export function AddResourceForm<
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onFormSubmit)}
-        className="space-y-4 pt-4"
-      >
+      <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-2">
         {Object.keys(defaultValues || {}).map((key) => (
           <FormField
             key={key}
