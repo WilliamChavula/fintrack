@@ -25,4 +25,18 @@ export const pathParamsSchema = z.object({
 
 export const insertTransactionSchema = createInsertSchema(transactions, {
   date: z.coerce.date(),
+}).omit({
+  id: true,
+});
+
+export const updateTransactionSchema = createUpdateSchema(transactions, {
+  date: z.coerce.date().optional(),
+}).omit({
+  id: true,
+});
+
+export const transactionsQueryParamsSchema = z.object({
+  from: z.string().optional(),
+  to: z.string().optional(),
+  accountId: z.string().optional(),
 });
