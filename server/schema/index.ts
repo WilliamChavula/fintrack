@@ -29,6 +29,10 @@ export const insertTransactionSchema = createInsertSchema(transactions, {
   id: true,
 });
 
+export const insertManyTransactionsSchema = z.object({
+  transactions: z.array(insertTransactionSchema),
+});
+
 export const updateTransactionSchema = createUpdateSchema(transactions, {
   date: z.coerce.date().optional(),
 }).omit({

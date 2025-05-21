@@ -6,6 +6,7 @@ import { protectedProcedure, router } from "@/server/trpc";
 import { accounts, categories, transactions } from "@/server/db/models";
 import {
   bulkDeleteResourceSchema,
+  insertManyTransactionsSchema,
   insertTransactionSchema,
   pathParamsSchema,
   transactionsQueryParamsSchema,
@@ -82,6 +83,28 @@ export const transactionsRouter = router({
         });
       }
       return { transaction: record };
+    }),
+
+  addManyTransactions: protectedProcedure
+    .input(insertManyTransactionsSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      const records = await db.transaction(async (tx) => {
+        return await tx
+          .insert(transactions)
+          .values(input.transactions)
+          .returning({
+            id: transactions.id,
+            amount: transactions.amount,
+            payee: transactions.payee,
+            notes: transactions.notes,
+            date: transactions.date,
+            account: transactions.account,
+            category: transactions.category,
+          });
+      });
+      return { transactions: records };
     }),
 
   addTransaction: protectedProcedure
