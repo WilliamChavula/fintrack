@@ -47,11 +47,13 @@ export function AddCategorySheetContainer() {
           </SheetDescription>
         </SheetHeader>
         <div className="px-5">
-          <AddResourceForm
+          <AddResourceForm<AddACategoryFormValues>
             onSubmit={handleSubmit}
             disabled={isLoading}
             resourceType="Category"
             schemaValidator={addCategoryFormSchema}
+            defaultValues={{ name: "" }}
+            placeholder="Groceries, Rent, etc."
           />
         </div>
       </SheetContent>

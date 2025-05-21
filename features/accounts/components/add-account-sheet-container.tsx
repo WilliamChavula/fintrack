@@ -47,12 +47,13 @@ export function AddAccountSheetContainer() {
           </SheetDescription>
         </SheetHeader>
         <div className="px-5">
-          <AddResourceForm
+          <AddResourceForm<AddAccountFormValues>
             resourceType="Account"
             onSubmit={handleSubmit}
             disabled={isLoading}
             schemaValidator={addAccountFormSchema}
             placeholder="Checking, Savings, etc."
+            defaultValues={{ name: "" }}
           />
         </div>
       </SheetContent>

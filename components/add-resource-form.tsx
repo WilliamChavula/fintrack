@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler, DefaultValues, Path } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { TrashIcon } from "lucide-react";
@@ -15,18 +15,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ZodSchema } from "zod";
 
-interface AddResourceFormProps {
+interface AddResourceFormProps<
+  TFormData extends Record<string, string | number | Date | undefined>,
+> {
   resourceType: string;
   id?: string;
   placeholder?: string;
   disabled?: boolean;
   schemaValidator: ZodSchema;
-  defaultValues?: { name: string };
-  onSubmit: (data: { name: string }) => void;
+  defaultValues: DefaultValues<TFormData>;
+  onSubmit: SubmitHandler<TFormData>;
   onDelete?: () => void;
 }
 
-export function AddResourceForm({
+export function AddResourceForm<
+  TFormData extends Record<string, string | number | Date | undefined>,
+>({
   id,
   resourceType,
   placeholder,
@@ -35,14 +39,12 @@ export function AddResourceForm({
   onSubmit,
   onDelete,
   schemaValidator,
-}: AddResourceFormProps) {
-  const form = useForm<{ name: string }>({
+}: AddResourceFormProps<TFormData>) {
+  const form = useForm<TFormData>({
     resolver: zodResolver(schemaValidator),
-    defaultValues: {
-      name: defaultValues?.name || "",
-    },
+    defaultValues,
   });
-  const onFormSubmit = (data: { name: string }) => {
+  const onFormSubmit = (data: TFormData) => {
     onSubmit(data);
     form.reset();
   };
@@ -59,24 +61,38 @@ export function AddResourceForm({
         onSubmit={form.handleSubmit(onFormSubmit)}
         className="space-y-4 pt-4"
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor={id}>Name</FormLabel>
-              <FormControl>
-                <Input
-                  id={id}
-                  placeholder={placeholder || ""}
-                  disabled={disabled}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {Object.keys(defaultValues || {}).map((key) => (
+          <FormField
+            key={key}
+            control={form.control}
+            name={key as Path<TFormData>}
+            render={({ field: { onChange, value, ...attrs } }) => (
+              <FormItem>
+                <FormLabel>{key}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    value={
+                      value instanceof Date
+                        ? value.toISOString().split("T")[0]
+                        : value
+                    }
+                    onChange={(e) => {
+                      if (!Date.parse(e.target.value)) {
+                        onChange(e);
+                      } else {
+                        onChange(new Date(e.target.value));
+                      }
+                    }}
+                    {...attrs}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
         <Button className="w-full" disabled={disabled} type="submit">
           {id ? "Save Changes" : `Create ${resourceType}`}
         </Button>
