@@ -161,7 +161,7 @@ export const transactionsRouter = router({
       return { transaction: record };
     }),
 
-  bulkDeleteCategories: protectedProcedure
+  bulkDeleteTransactions: protectedProcedure
     .input(bulkDeleteResourceSchema)
     .mutation(async ({ ctx, input }) => {
       const { db, auth } = ctx;
