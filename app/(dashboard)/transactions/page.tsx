@@ -3,26 +3,26 @@
 import { Loader, PlusSquare } from "lucide-react";
 
 import { useStore } from "@/features/store";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { columns, GetAccountResponse } from "./columns";
+import { columns, TransactionType } from "./columns";
 
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete-accounts";
 import { Row } from "@tanstack/react-table";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 
 function Transactions() {
   const open = useStore((state) => state.openCreatePanel);
-  const { data, isLoading } = useGetAccounts();
-  const { deleteAccounts, isPending } = useBulkDeleteAccounts();
+  const { data, isLoading } = useGetTransactions();
+  const { deleteTransactions, isPending } = useBulkDeleteTransactions();
 
   const isDisabled = isPending || isLoading;
 
-  const handleDelete = (rows: Row<GetAccountResponse>[]) => {
+  const handleDelete = (rows: Row<TransactionType>[]) => {
     const selectedRows = rows.map((row) => row.original.id);
-    deleteAccounts({ ids: selectedRows });
+    deleteTransactions({ ids: selectedRows });
   };
 
   if (isLoading) {
@@ -58,8 +58,9 @@ function Transactions() {
           </CardHeader>
           <CardContent>
             <DataTable
+              filterKey="date"
               columns={columns}
-              data={data?.accounts || []}
+              data={data || []}
               disabled={isDisabled}
               onDelete={handleDelete}
             />
