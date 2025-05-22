@@ -1,5 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { trpc } from "@/providers/tanstack-provider";
+import { convertMilliUnitsToAmount } from "@/lib/utils";
 
 export const useGetTransactions = () => {
   const params = useSearchParams();
@@ -19,5 +20,12 @@ export const useGetTransactions = () => {
     throw new Error("Error fetching transactions");
   }
 
-  return { data, isLoading };
+  return {
+    data: data?.transactions.map((d) => ({
+      ...d,
+      date: d.date.toString(),
+      amount: convertMilliUnitsToAmount(d.amount),
+    })),
+    isLoading,
+  };
 };
