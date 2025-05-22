@@ -58,6 +58,7 @@ function Accounts() {
           </CardHeader>
           <CardContent>
             <DataTable
+              filterKey="email"
               columns={columns}
               data={data?.accounts || []}
               disabled={isDisabled}
