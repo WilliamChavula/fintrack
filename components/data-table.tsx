@@ -30,7 +30,7 @@ import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filterKey?: string;
+  filterKey: string;
   onDelete?: (row: Row<TData>[]) => void;
   disabled?: boolean;
 }
@@ -40,7 +40,7 @@ export function DataTable<TData, TValue>({
   data,
   onDelete,
   disabled,
-  filterKey = "",
+  filterKey,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -72,10 +72,10 @@ export function DataTable<TData, TValue>({
       <ConfirmationDialog />
       <div className="flex items-center py-4">
         <Input
-          placeholder={`Filter by ${filterKey || ""}...`}
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder={`Filter by ${filterKey}...`}
+          value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn(filterKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
