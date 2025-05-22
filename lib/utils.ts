@@ -11,3 +11,11 @@ export function convertAmountToMilliUnits(amount: number) {
 export function convertMilliUnitsToAmount(milliUnits: number) {
   return milliUnits / 1000;
 }
+
+export function formatCurrency(value: number) {
+  return Intl.NumberFormat("en-US", {
+    currency: "USD",
+    style: "currency",
+    minimumFractionDigits: 2,
+  }).format(value);
+}
