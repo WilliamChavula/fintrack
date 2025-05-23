@@ -58,7 +58,7 @@ function Transactions() {
           </CardHeader>
           <CardContent>
             <DataTable
-              filterKey="date"
+              filterKey="payee"
               columns={columns}
               data={data || []}
               disabled={isDisabled}
