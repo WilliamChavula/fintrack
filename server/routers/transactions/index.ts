@@ -61,6 +61,11 @@ export const transactionsRouter = router({
     .query(async ({ ctx, input }) => {
       const { db, auth } = ctx;
 
+      const subquery = db
+        .select({ id: accounts.id })
+        .from(accounts)
+        .where(eq(accounts.userId, auth.userId));
+
       const record = await db.query.transactions.findFirst({
         columns: {
           id: true,
@@ -73,9 +78,10 @@ export const transactionsRouter = router({
         },
         where: and(
           eq(transactions.id, input.id),
-          eq(accounts.userId, auth.userId),
+          inArray(transactions.account, subquery),
         ),
       });
+
       if (!record) {
         throw new TRPCError({
           code: "NOT_FOUND",
