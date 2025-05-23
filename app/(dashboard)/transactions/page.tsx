@@ -51,7 +51,7 @@ function Transactions() {
             <CardTitle className="line-clamp-1 text-xl">
               Transactions History
             </CardTitle>
-            <Button size="sm" onClick={open}>
+            <Button size="sm" onClick={() => open({ transactionOpen: true })}>
               <PlusSquare className="mr-2 size-4" />
               Add Transaction
             </Button>

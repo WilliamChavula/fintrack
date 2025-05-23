@@ -12,6 +12,8 @@ import DropDownMenuActions from "@/features/accounts/components/dropdown-menu-ac
 import { format } from "date-fns";
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { AccountCell } from "./components/account-cell";
+import { CategoryCell } from "./components/category-cell";
 
 export type GetTransactionResponse = inferProcedureOutput<
   AppRouter["getTransactions"]
@@ -78,7 +80,13 @@ export const columns: ColumnDef<TransactionType>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span>{row.original.category}</span>;
+      return (
+        <CategoryCell
+          id={row.original.id}
+          categoryName={row.original.category}
+          categoryId={row.original.categoryId}
+        />
+      );
     },
   },
   {
@@ -134,7 +142,12 @@ export const columns: ColumnDef<TransactionType>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span>{row.original.account}</span>;
+      return (
+        <AccountCell
+          accountName={row.original.account}
+          accountId={row.original.accountId}
+        />
+      );
     },
   },
   {
