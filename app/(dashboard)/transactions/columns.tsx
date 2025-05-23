@@ -8,12 +8,12 @@ import type { AppRouter } from "@/server/routers";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import DropDownMenuActions from "@/features/accounts/components/dropdown-menu-actions";
 import { format } from "date-fns";
 import { formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { AccountCell } from "./components/account-cell";
 import { CategoryCell } from "./components/category-cell";
+import DropDownMenuActions from "@/features/transactions/components/dropdown-menu-actions";
 
 export type GetTransactionResponse = inferProcedureOutput<
   AppRouter["getTransactions"]

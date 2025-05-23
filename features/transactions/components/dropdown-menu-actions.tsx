@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useStore } from "../../store";
-import { useDeleteAccount } from "../api/use-delete-account";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { useDeleteTransaction } from "../api/use-delete-transaction";
 
 type DropDownMenuActionsProps = {
   id: string;
@@ -19,17 +19,17 @@ type DropDownMenuActionsProps = {
 
 const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
   const open = useStore((state) => state.openEditPanel);
-  const { deleteAccount, isPending: isDeleting } = useDeleteAccount();
+  const { deleteTransaction, isPending: isDeleting } = useDeleteTransaction();
   const [ConfirmationDialog, onConfirmation] = useConfirmDialog({
-    title: "Delete Account?",
+    title: "Delete Transaction?",
     message:
-      "Are you sure you want to delete this account? This action cannot be undone.",
+      "Are you sure you want to delete this transaction? This action cannot be undone.",
   });
 
   const handleDelete = async () => {
     const confirmed = await onConfirmation();
     if (confirmed) {
-      deleteAccount({ id }, { onSuccess: () => close() });
+      deleteTransaction({ id }, { onSuccess: () => close() });
     }
   };
 
@@ -48,7 +48,7 @@ const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
             disabled={isDeleting}
             className="cursor-pointer"
             onClick={() => {
-              return open(id);
+              return open(id, { transactionOpen: true });
             }}
           >
             <Edit className="mr-2 size-4" />

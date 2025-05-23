@@ -9,6 +9,7 @@ interface CategoryCellProps {
 }
 
 export const CategoryCell = ({
+  id,
   categoryId,
   categoryName,
 }: CategoryCellProps) => {
@@ -17,6 +18,8 @@ export const CategoryCell = ({
   const handleEditCategory = () => {
     if (categoryId) {
       open(categoryId, { categoryOpen: true });
+    } else {
+      open(id, { transactionOpen: true });
     }
   };
 
@@ -24,7 +27,7 @@ export const CategoryCell = ({
     <div
       className={cn(
         "group flex cursor-pointer items-center gap-2",
-        !categoryName && "text-rose-500",
+        !categoryName && "text-amber-500",
       )}
       onClick={handleEditCategory}
     >

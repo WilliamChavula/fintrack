@@ -1,5 +1,6 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
 import { useMountedState } from "react-use";
 
 import { useStore } from "../../store";
@@ -25,7 +26,7 @@ import { AddTransactionForm } from "./add-transaction-form";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 export function AddTransactionSheetContainer() {
-  const isOpen = useStore((state) => state.isOpen);
+  const isOpen = useStore(useShallow((state) => state.panels.transactionOpen));
   const close = useStore((state) => state.closeCreatePanel);
 
   const { addTransaction, isLoading: accountLoading } =
