@@ -9,6 +9,7 @@ export const useDeleteCategory = () => {
       onSuccess: () => {
         toast.success("Category deleted successfully");
         utils.getCategories.invalidate();
+        utils.getTransactions.invalidate();
 
         // TODO: invalidate summary query
       },

@@ -8,6 +8,7 @@ export const useDeleteAccount = () => {
     onSuccess: () => {
       toast.success("Account deleted successfully");
       utils.getAccounts.invalidate();
+      utils.getTransactions.invalidate();
 
       // TODO: invalidate summary query
     },

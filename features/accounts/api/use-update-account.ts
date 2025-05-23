@@ -10,6 +10,7 @@ export const useUpdateAccount = () => {
         toast.success("Account updated successfully");
         utils.getAccount.invalidate();
         utils.getAccounts.invalidate();
+        utils.getTransactions.invalidate();
 
         // TODO: invalidate summary query
       },

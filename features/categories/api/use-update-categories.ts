@@ -10,6 +10,7 @@ export const useUpdateCategory = () => {
         toast.success("Category updated successfully");
         utils.getCategory.invalidate();
         utils.getCategories.invalidate();
+        utils.getTransactions.invalidate();
 
         // TODO: invalidate summary query
       },
