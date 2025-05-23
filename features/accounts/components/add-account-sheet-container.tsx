@@ -1,5 +1,7 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
+
 import { useMountedState } from "react-use";
 
 import { useStore } from "../../store";
@@ -19,7 +21,7 @@ import { useCreateNewAccount } from "../api/use-create-new-account";
 import { AddResourceForm } from "@/components/add-resource-form";
 
 export function AddAccountSheetContainer() {
-  const isOpen = useStore((state) => state.isOpen);
+  const isOpen = useStore(useShallow((state) => state.panels.accountOpen));
   const close = useStore((state) => state.closeCreatePanel);
   const { createAccount, isLoading } = useCreateNewAccount();
 

@@ -48,7 +48,7 @@ const DropDownMenuActions = ({ id }: DropDownMenuActionsProps) => {
             disabled={isDeleting}
             className="cursor-pointer"
             onClick={() => {
-              return open(id);
+              return open(id, { categoryOpen: true });
             }}
           >
             <Edit className="mr-2 size-4" />

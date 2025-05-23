@@ -1,5 +1,6 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
 import { useMountedState } from "react-use";
 import { Loader } from "lucide-react";
 
@@ -25,7 +26,7 @@ import {
 export function EditCategorySheetContainer() {
   const isMounted = useMountedState();
 
-  const isOpen = useStore((state) => state.isOpen);
+  const isOpen = useStore(useShallow((state) => state.panels.categoryOpen));
   const close = useStore((state) => state.closeEditPanel);
   const id = useStore((state) => state.id);
 
@@ -78,7 +79,7 @@ export function EditCategorySheetContainer() {
                 id={id}
                 onSubmit={handleSubmit}
                 disabled={isDeleting || isUpdating}
-                defaultValues={data?.category}
+                defaultValues={{ name: data?.category.name || "" }}
                 onDelete={handleDelete}
               />
             )}

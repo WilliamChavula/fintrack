@@ -1,5 +1,6 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
 import { useMountedState } from "react-use";
 
 import { useStore } from "../../store";
@@ -19,7 +20,7 @@ import {
 import { AddResourceForm } from "@/components/add-resource-form";
 
 export function AddCategorySheetContainer() {
-  const isOpen = useStore((state) => state.isOpen);
+  const isOpen = useStore(useShallow((state) => state.panels.categoryOpen));
   const close = useStore((state) => state.closeCreatePanel);
   const { createCategory, isLoading } = useCreateNewCategory();
 

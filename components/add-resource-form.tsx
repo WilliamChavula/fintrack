@@ -16,20 +16,20 @@ import { Button } from "@/components/ui/button";
 import { ZodSchema } from "zod";
 
 interface AddResourceFormProps<
-  TFormData extends Record<string, string | number | Date | undefined>,
+  TFormData extends Record<string, string | number>,
 > {
   resourceType: string;
   id?: string;
   placeholder?: string;
   disabled?: boolean;
   schemaValidator: ZodSchema;
-  defaultValues: DefaultValues<TFormData>;
+  defaultValues?: DefaultValues<TFormData>;
   onSubmit: SubmitHandler<TFormData>;
   onDelete?: () => void;
 }
 
 export function AddResourceForm<
-  TFormData extends Record<string, string | number | Date | undefined>,
+  TFormData extends Record<string, string | number>,
 >({
   id,
   resourceType,

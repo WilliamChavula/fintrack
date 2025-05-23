@@ -11,7 +11,19 @@ export const createResourceSlice: StateCreator<
   [],
   CreateResourceState
 > = (set) => ({
-  isOpen: false,
-  openCreatePanel: () => set({ isOpen: true }),
-  closeCreatePanel: () => set({ isOpen: false }),
+  panels: {
+    accountOpen: false,
+    categoryOpen: false,
+    transactionOpen: false,
+  },
+  openCreatePanel: (newState) =>
+    set((state) => ({ panels: { ...state.panels, ...newState } })),
+  closeCreatePanel: () =>
+    set({
+      panels: {
+        accountOpen: false,
+        categoryOpen: false,
+        transactionOpen: false,
+      },
+    }),
 });

@@ -1,5 +1,7 @@
 "use client";
 
+import { useShallow } from "zustand/react/shallow";
+
 import { useMountedState } from "react-use";
 import { Loader } from "lucide-react";
 
@@ -26,10 +28,12 @@ import { AddResourceForm } from "@/components/add-resource-form";
 export function EditAccountSheetContainer() {
   const isMounted = useMountedState();
 
-  const isOpen = useStore((state) => state.isOpen);
+  const isOpen = useStore(useShallow((state) => state.panels.accountOpen));
   const close = useStore((state) => state.closeEditPanel);
   const id = useStore((state) => state.id);
+
   const { data, isLoading } = useGetAccount(id);
+
   const { updateAccount, isLoading: isUpdating } = useUpdateAccount();
   const { deleteAccount, isPending: isDeleting } = useDeleteAccount();
   const [ConfirmationDialog, onConfirmation] = useConfirmDialog({
@@ -72,13 +76,13 @@ export function EditAccountSheetContainer() {
                 <Loader className="text-muted-foreground size-4 animate-spin" />
               </div>
             ) : (
-              <AddResourceForm
+              <AddResourceForm<AddAccountFormValues>
                 resourceType="Account"
                 schemaValidator={addAccountFormSchema}
                 id={id}
                 onSubmit={handleSubmit}
                 disabled={isDeleting || isUpdating}
-                defaultValues={data?.account}
+                defaultValues={{ name: data?.account.name || "" }}
                 onDelete={handleDelete}
               />
             )}
