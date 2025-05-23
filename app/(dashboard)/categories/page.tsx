@@ -51,7 +51,7 @@ function Categories() {
             <CardTitle className="line-clamp-1 text-xl">
               Manage your Categories
             </CardTitle>
-            <Button size="sm" onClick={open}>
+            <Button size="sm" onClick={() => open({ categoryOpen: true })}>
               <PlusSquare className="mr-2 size-4" />
               Add New
             </Button>
