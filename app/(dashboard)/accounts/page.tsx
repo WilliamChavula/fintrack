@@ -51,14 +51,14 @@ function Accounts() {
             <CardTitle className="line-clamp-1 text-xl">
               Manage your Accounts
             </CardTitle>
-            <Button size="sm" onClick={open}>
+            <Button size="sm" onClick={() => open({ accountOpen: true })}>
               <PlusSquare className="mr-2 size-4" />
               Add Account
             </Button>
           </CardHeader>
           <CardContent>
             <DataTable
-              filterKey="email"
+              filterKey="name"
               columns={columns}
               data={data?.accounts || []}
               disabled={isDisabled}
