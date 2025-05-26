@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Loader, PlusSquare } from "lucide-react";
 
 import { useStore } from "@/features/store";
@@ -12,8 +13,24 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Row } from "@tanstack/react-table";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
+import UploadButton from "./components/upload-button";
+import ImportCard from "./components/import-card";
+
+enum VARIANTS {
+  LIST = "LIST",
+  IMPORT = "IMPORT",
+}
+
+const INITIAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {},
+};
 
 function Transactions() {
+  const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+  const [results, setResults] = useState(INITIAL_IMPORT_RESULTS);
+
   const open = useStore((state) => state.openCreatePanel);
   const { data, isLoading } = useGetTransactions();
   const { deleteTransactions, isPending } = useBulkDeleteTransactions();
@@ -23,6 +40,16 @@ function Transactions() {
   const handleDelete = (rows: Row<TransactionType>[]) => {
     const selectedRows = rows.map((row) => row.original.id);
     deleteTransactions({ ids: selectedRows });
+  };
+
+  const handleFileUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    setVariant(VARIANTS.IMPORT);
+    setResults(results);
+  };
+
+  const onCancelFileUpload = () => {
+    setResults(INITIAL_IMPORT_RESULTS);
+    setVariant(VARIANTS.LIST);
   };
 
   if (isLoading) {
@@ -43,6 +70,18 @@ function Transactions() {
       </main>
     );
   }
+
+  if (variant === VARIANTS.IMPORT) {
+    return (
+      <>
+        <ImportCard
+          data={results.data}
+          onCancel={onCancelFileUpload}
+          onSubmit={() => {}}
+        />
+      </>
+    );
+  }
   return (
     <main>
       <section className="mx-auto -mt-16 w-full max-w-screen-2xl pb-6">
@@ -51,10 +90,13 @@ function Transactions() {
             <CardTitle className="line-clamp-1 text-xl">
               Transactions History
             </CardTitle>
-            <Button size="sm" onClick={() => open({ transactionOpen: true })}>
-              <PlusSquare className="mr-2 size-4" />
-              Add Transaction
-            </Button>
+            <div className="flex items-center gap-x-2">
+              <Button size="sm" onClick={() => open({ transactionOpen: true })}>
+                <PlusSquare className="mr-2 size-4" />
+                Add Transaction
+              </Button>
+              <UploadButton onUpload={handleFileUpload} />
+            </div>
           </CardHeader>
           <CardContent>
             <DataTable
