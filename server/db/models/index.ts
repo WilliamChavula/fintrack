@@ -60,25 +60,25 @@ export const transactions = pgTable(
 // Relationships
 
 export const accountsRelations = relations(accounts, ({ many }) => ({
-  transaction: many(transactions, {
-    relationName: "transaction",
+  transactions: many(transactions, {
+    relationName: "account_transactions",
   }),
 }));
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
   transaction: many(transactions, {
-    relationName: "transaction",
+    relationName: "transaction_category",
   }),
 }));
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
   account: one(accounts, {
-    relationName: "account",
+    relationName: "account_transactions",
     fields: [transactions.account],
     references: [accounts.id],
   }),
   category: one(categories, {
-    relationName: "category",
+    relationName: "transaction_category",
     fields: [transactions.category],
     references: [categories.id],
   }),
