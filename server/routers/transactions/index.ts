@@ -96,8 +96,8 @@ export const transactionsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const records = await db.transaction(async (tx) => {
-        return await tx
+      try {
+        const records = await db
           .insert(transactions)
           .values(input.transactions)
           .returning({
@@ -109,8 +109,11 @@ export const transactionsRouter = router({
             account: transactions.account,
             category: transactions.category,
           });
-      });
-      return { transactions: records };
+        return { transactions: records };
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     }),
 
   addTransaction: protectedProcedure
