@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { Loader, PlusSquare } from "lucide-react";
 
 import { useStore } from "@/features/store";
@@ -15,6 +16,14 @@ import { useGetTransactions } from "@/features/transactions/api/use-get-transact
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 import UploadButton from "./components/upload-button";
 import ImportCard from "./components/import-card";
+import { inferProcedureOutput } from "@trpc/server";
+import { AppRouter } from "@/server/routers";
+import { useChooseAccountDialog } from "@/hooks/use-select-account";
+import { useBulkCreateNewTransaction } from "@/features/transactions/api/use-bulk-create-new-transaction";
+
+type TTransactionsInput = inferProcedureOutput<
+  AppRouter["addTransaction"]
+>["transaction"];
 
 enum VARIANTS {
   LIST = "LIST",
@@ -34,6 +43,8 @@ function Transactions() {
   const open = useStore((state) => state.openCreatePanel);
   const { data, isLoading } = useGetTransactions();
   const { deleteTransactions, isPending } = useBulkDeleteTransactions();
+  const [ChooseAccountDialog, confirm] = useChooseAccountDialog();
+  const { addManyTransactions } = useBulkCreateNewTransaction();
 
   const isDisabled = isPending || isLoading;
 
@@ -50,6 +61,28 @@ function Transactions() {
   const onCancelFileUpload = () => {
     setResults(INITIAL_IMPORT_RESULTS);
     setVariant(VARIANTS.LIST);
+  };
+
+  const handleOnCsvImportSubmit = async (values: TTransactionsInput[]) => {
+    const accId = await confirm();
+
+    if (!accId) {
+      return toast.error("Please select an account to continue");
+    }
+
+    const data = values.map((d) => ({
+      ...d,
+      account: accId as string,
+    }));
+
+    addManyTransactions(
+      { transactions: data },
+      {
+        onSuccess: () => {
+          onCancelFileUpload();
+        },
+      },
+    );
   };
 
   if (isLoading) {
@@ -74,10 +107,11 @@ function Transactions() {
   if (variant === VARIANTS.IMPORT) {
     return (
       <>
+        <ChooseAccountDialog />
         <ImportCard
           data={results.data}
           onCancel={onCancelFileUpload}
-          onSubmit={() => {}}
+          onSubmit={handleOnCsvImportSubmit}
         />
       </>
     );
