@@ -44,3 +44,9 @@ export const transactionsQueryParamsSchema = z.object({
   to: z.string().optional(),
   accountId: z.string().optional(),
 });
+
+export const summaryQueryParamsSchema = z.object({
+  from: z.string().optional(),
+  to: z.string().optional(),
+  accountId: z.string().optional(),
+});
