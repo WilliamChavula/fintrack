@@ -2,7 +2,7 @@ import { cva, VariantProps } from "class-variance-authority";
 
 import { LucideIcon } from "lucide-react";
 
-import { CountUp } from "./count-up";
+import { CountUp } from "../count-up";
 
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import {
@@ -11,8 +11,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Skeleton } from "./ui/skeleton";
+} from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
 
 const boxVariants = cva("rounded-md p-3", {
   variants: {

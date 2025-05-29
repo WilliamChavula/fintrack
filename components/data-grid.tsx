@@ -2,7 +2,7 @@
 
 import { formatDateRange } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import DataCard, { LoadingSkeleton } from "./data-card";
+import DataCard, { LoadingSkeleton } from "./charts/data-card";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react";
 
