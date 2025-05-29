@@ -10,8 +10,7 @@ export const useUpdateTransaction = () => {
         toast.success("Transaction updated successfully");
         utils.getTransaction.invalidate();
         utils.getTransactions.invalidate();
-
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to update transaction");

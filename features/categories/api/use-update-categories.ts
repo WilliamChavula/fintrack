@@ -12,7 +12,7 @@ export const useUpdateCategory = () => {
         utils.getCategories.invalidate();
         utils.getTransactions.invalidate();
 
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to update category");

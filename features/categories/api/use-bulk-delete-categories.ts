@@ -11,7 +11,7 @@ export const useBulkDeleteCategories = () => {
         // Refetch the accounts after deletion
         utils.getCategories.invalidate();
 
-        // TODO: Invalidate summary
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to delete categories");

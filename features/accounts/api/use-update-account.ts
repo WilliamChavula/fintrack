@@ -12,7 +12,7 @@ export const useUpdateAccount = () => {
         utils.getAccounts.invalidate();
         utils.getTransactions.invalidate();
 
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to update account");

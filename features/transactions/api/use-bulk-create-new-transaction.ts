@@ -10,7 +10,7 @@ export const useBulkCreateNewTransaction = () => {
         toast.success("Transactions created successfully");
         utils.getTransactions.invalidate();
 
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to create transactions");

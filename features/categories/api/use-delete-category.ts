@@ -11,7 +11,7 @@ export const useDeleteCategory = () => {
         utils.getCategories.invalidate();
         utils.getTransactions.invalidate();
 
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to delete category");

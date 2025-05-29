@@ -10,7 +10,7 @@ export const useDeleteAccount = () => {
       utils.getAccounts.invalidate();
       utils.getTransactions.invalidate();
 
-      // TODO: invalidate summary query
+      utils.getSummary.invalidate();
     },
     onError: () => {
       toast.error("Failed to delete account");

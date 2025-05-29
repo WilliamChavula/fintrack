@@ -10,7 +10,7 @@ export const useDeleteTransaction = () => {
         toast.success("Transaction deleted successfully");
         utils.getTransactions.invalidate();
 
-        // TODO: invalidate summary query
+        utils.getSummary.invalidate();
       },
       onError: () => {
         toast.error("Failed to delete transaction");
